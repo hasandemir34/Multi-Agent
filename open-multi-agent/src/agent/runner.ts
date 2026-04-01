@@ -188,6 +188,9 @@ export class AgentRunner {
         accumulated.toolCalls = result.toolCalls
         accumulated.tokenUsage = result.tokenUsage
         accumulated.turns = result.turns
+      }else if (event.type === 'error') {
+        // HATA YUTULMASINI ENGELLEYEN YENİ SATIRLAR
+        throw event.data; 
       }
     }
 

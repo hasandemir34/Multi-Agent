@@ -1,10 +1,11 @@
+process.env.ANTHROPIC_API_KEY = ""
 import { OpenMultiAgent } from '../src/index.js'
 import type { AgentConfig, OrchestratorEvent } from '../src/types.js'
 
 // 1. Agent Definitions
 const architect: AgentConfig = {
   name: 'architect',
-  model: 'claude-3-5-sonnet-20241022', // Updated to the latest stable model naming
+  model: 'claude-sonnet-4-6', // Updated to the latest stable model naming
   provider: 'anthropic',
   systemPrompt: `You are a mobile application architect. Your task is to design a clean and sustainable file/folder structure using React Native and Expo. Avoid unnecessary prose and provide your plans in markdown format.`,
   tools: ['bash', 'file_write'],
@@ -14,7 +15,7 @@ const architect: AgentConfig = {
 
 const developer: AgentConfig = {
   name: 'developer',
-  model: 'claude-3-5-sonnet-20241022',
+  model: 'claude-sonnet-4-67',
   provider: 'anthropic',
   systemPrompt: `You are a React Native (TypeScript) developer. You implement the plan defined by the architect. Write clean, functional code with proper error handling. Use your tools to write the files.`,
   tools: ['bash', 'file_read', 'file_write', 'file_edit'],
@@ -24,7 +25,7 @@ const developer: AgentConfig = {
 
 const reviewer: AgentConfig = {
   name: 'reviewer',
-  model: 'claude-3-5-sonnet-20241022',
+  model: 'claude-sonnet-4-6',
   provider: 'anthropic',
   systemPrompt: `You are a senior code reviewer. Review the developed React Native code for correctness, performance, and clarity. Use your tools to read the files before conducting the review.`,
   tools: ['bash', 'file_read', 'grep'],
@@ -46,7 +47,7 @@ function handleProgress(event: OrchestratorEvent): void {
 
 // 3. Orchestration and Goal Setting
 const orchestrator = new OpenMultiAgent({
-  defaultModel: 'claude-3-5-sonnet-20241022',
+  defaultModel: 'claude-sonnet-4-6',
   maxConcurrency: 1, 
   onProgress: handleProgress,
 })
